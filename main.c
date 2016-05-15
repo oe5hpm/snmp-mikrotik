@@ -227,6 +227,9 @@ int main (int argc, char **argv)
 					snmp_free_pdu(response);
 				break;
 			}
+		} else {
+			printf("timeout/error!\n");
+			exit(1);
 		}
 	}
 
