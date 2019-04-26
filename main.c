@@ -216,7 +216,6 @@ int main (int argc, char **argv)
 					      vars->name, vars->name_length);
 				if (response)
 					snmp_free_pdu(response);
-
 				pclient = attachclient(pclient);
 				memcpy(pclient->macaddr, vars->buf,
 				       sizeof(pclient->macaddr));
@@ -234,7 +233,7 @@ int main (int argc, char **argv)
 	}
 
 	struct client_t *tofree = NULL;
-	do {
+	while (pclient) {
 		tofree = pclient;
 		snprintf(phpbuf, sizeof(phpbuf),
 			"%02x-%02x-%02x-%02x-%02x-%02x;%s;%d;%d;%d;%d;%d;%lud;"\
@@ -253,7 +252,7 @@ int main (int argc, char **argv)
 		printf("%s\n", phpbuf);
 		pclient = pclient->prev;
 		free(tofree);
-	} while (pclient);
+	};
 
 	snmp_close(ss);
 
